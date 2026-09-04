@@ -166,6 +166,159 @@
    #rptReportSubtitle:placeholder-shown {
         display: none !important;
     }
+/* ==========================================
+   SIDEBAR
+   ========================================== */
+
+#appSidebar {
+    transition:
+        transform 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
+}
+
+
+/* ==========================================
+   DESKTOP
+   ========================================== */
+
+@media (min-width: 768px) {
+
+    #appSidebar {
+
+        position: fixed !important;
+
+        left: 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+
+        width: 16rem !important;
+
+        transform: translateX(-100%) !important;
+
+        z-index: 40;
+
+        box-shadow: none;
+    }
+
+
+    /* ==============================
+       SIDEBAR OPEN
+       ============================== */
+
+    #appSidebar.sidebar-expanded {
+
+        transform: translateX(0) !important;
+
+        box-shadow:
+            15px 0 35px rgba(0, 0, 0, 0.25);
+    }
+
+
+    /* ==============================
+       STICKER CLOSED
+       ============================== */
+
+    #btnSidebarSticker {
+
+        position: fixed !important;
+
+        left: 0 !important;
+        top: 20px !important;
+
+        z-index: 60;
+
+        display: flex !important;
+
+        align-items: center;
+        gap: 6px;
+
+        padding: 8px 10px;
+
+        background: #1e293b;
+
+        color: #38bdf8;
+
+        border-left: 2px solid #38bdf8;
+
+        border-radius: 0 8px 8px 0;
+
+        box-shadow:
+            4px 4px 12px rgba(0, 0, 0, 0.18);
+
+        cursor: pointer;
+
+        user-select: none;
+
+        transition:
+            left 0.3s ease-in-out,
+            background 0.2s ease,
+            color 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+
+    /* ==============================
+       STICKER HOVER
+       ============================== */
+
+    #btnSidebarSticker:hover {
+
+        background: #0f172a;
+
+        color: #ffffff;
+    }
+
+
+    /* ==============================
+       STICKER WHEN SIDEBAR OPEN
+       ============================== */
+
+    #btnSidebarSticker.sidebar-sticker-open {
+
+        left: 16rem !important;
+
+        background: #0f172a;
+
+        color: #f43f5e;
+
+        border-left-color: #f43f5e;
+    }
+
+
+    #btnSidebarSticker.sidebar-sticker-open:hover {
+
+        background: #020617;
+
+        color: #ffffff;
+    }
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 767px) {
+
+    #appSidebar {
+
+        position: fixed !important;
+
+        left: 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+
+        transform: translateX(-100%) !important;
+
+        z-index: 40;
+    }
+
+
+    #btnSidebarSticker {
+
+        display: none !important;
+    }
+}
 }
     </style>
 </head>
@@ -199,75 +352,254 @@
                     <span id="txtOfflineStatus" class="text-slate-300">● Offline Ready</span>
                 </div>
 
+              <button id="btnHeaderMenuToggle" type="button" class="w-9 h-9 flex items-center justify-center text-slate-300 hover:text-sky-400 bg-slate-800/80 hover:bg-slate-700/90 border border-slate-700 hover:border-sky-500/40 rounded-lg shadow-sm transition-all duration-200 touch-target" title="Mở/Đóng Menu">
+	<i id="iconHeaderMenu" class="fa-solid fa-bars text-lg"></i>
+               </button>
                 <button id="btnToggleTheme" class="p-2 text-slate-300 hover:text-white rounded-lg hover:bg-slate-700 touch-target" title="Đổi giao diện">
                     <i class="fa-solid fa-moon text-lg" id="iconTheme"></i>
                 </button>
             </div>
         </div>
     </header>
+<!-- MAIN WRAPPER -->
+<div class="flex-1 flex overflow-hidden relative">
 
-    <!-- MAIN WRAPPER -->
-    <div class="flex-1 flex overflow-hidden relative">
+    <!-- ==========================================
+         SIDEBAR BACKDROP - MOBILE
+         ========================================== -->
+    <div id="sidebarBackdrop"
+         class="fixed inset-0 bg-slate-900/50 z-20 hidden md:hidden">
+    </div>
 
-        <!-- SIDEBAR DESKTOP & MOBILE BACKDROP -->
-        <div id="sidebarBackdrop" class="fixed inset-0 bg-slate-900/50 z-20 hidden md:hidden"></div>
-        <aside id="appSidebar" class="fixed md:static inset-y-0 left-0 z-20 w-64 bg-slate-800 text-slate-300 flex flex-col transition-transform duration-200 transform -translate-x-full md:translate-x-0 no-print flex-shrink-0">
-            <div class="p-3 border-b border-slate-700 md:hidden flex justify-between items-center">
-                <span class="font-bold text-white">Menu Điều Hành</span>
-                <button id="btnCloseSidebar" class="p-2 text-slate-400 hover:text-white touch-target"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
 
-            <nav class="flex-1 overflow-y-auto py-2 px-2 space-y-1">
-                <a href="#dashboard" data-tab="dashboard" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
-                    <i class="fa-solid fa-chart-line w-5 text-center text-emerald-400"></i> Dashboard
-                </a>
-                <a href="#inbound" data-tab="inbound" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
-                    <i class="fa-solid fa-truck-ramp-box w-5 text-center text-blue-400"></i> Inbound 
-                </a>
-                <a href="#outbound" data-tab="outbound" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
-                    <i class="fa-solid fa-dolly w-5 text-center text-amber-400"></i> Outbound 
-                </a>
-                <a href="#inventory" data-tab="inventory" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
-                    <i class="fa-solid fa-boxes-stacked w-5 text-center text-purple-400"></i> Inventory 
-                </a>
-                <a href="#cycle-count" data-tab="cycle-count" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
-                    <i class="fa-solid fa-clipboard-check w-5 text-center text-teal-400"></i> Cycle Count
-                </a>
-                <a href="#timeline" data-tab="timeline" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
-                    <i class="fa-solid fa-timeline w-5 text-center text-indigo-400"></i> Operations Timeline
-                </a>
-                <a href="#alerts" data-tab="alerts" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors justify-between">
-                    <span class="flex items-center gap-3">
-                        <i class="fa-solid fa-triangle-exclamation w-5 text-center text-rose-400"></i> System Alerts
-                    </span>
-                    <span id="badgeAlertsCount" class="bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span>
-                </a>
-                <a href="#excel-center" data-tab="excel-center" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
-                    <i class="fa-solid fa-file-excel w-5 text-center text-emerald-500"></i> Template Library
-                </a>
-                <a href="#reports" data-tab="reports" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
-                    <i class="fa-solid fa-print w-5 text-center text-sky-400"></i> Reports & Printing
-                </a>
-                <a href="#audit-log" data-tab="audit-log" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
-                    <i class="fa-solid fa-clock-rotate-left w-5 text-center text-slate-400"></i> Audit Log
-                </a>
-                <a href="#backup" data-tab="backup" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
-                    <i class="fa-solid fa-database w-5 text-center text-amber-500"></i> Backup & Restore
-                </a>
-                <a href="#settings" data-tab="settings" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
-                    <i class="fa-solid fa-gear w-5 text-center text-gray-400"></i> System Settings
-                </a>
-            </nav>
 
-            <div class="p-3 border-t border-slate-700 text-xs text-slate-400 flex flex-col gap-2">
-                <button id="btnSeedDemo" class="w-full py-2 px-3 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition touch-target">
-                    <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Nạp Dữ Liệu Mẫu
-                </button>
-                <button id="btnClearDemo" class="w-full py-1.5 px-3 bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 rounded-lg text-[11px] font-medium flex items-center justify-center gap-2 transition touch-target">
-                    <i class="fa-solid fa-trash-can"></i> Xóa Toàn Bộ Dữ Liệu
-                </button>
-            </div>
-        </aside>
+
+<!-- ==========================================
+     SIDEBAR
+     ========================================== -->
+<aside id="appSidebar"
+       class="fixed inset-y-0 left-0 z-40
+              w-64
+              bg-slate-800
+              text-slate-300
+              flex flex-col
+              transition-transform duration-300
+              transform
+              -translate-x-full
+              no-print
+              flex-shrink-0
+              shadow-lg">
+
+
+    <!-- ==========================================
+         MOBILE HEADER
+         ========================================== -->
+    <div class="p-3 border-b border-slate-700
+                md:hidden
+                flex justify-between items-center">
+
+        <span class="font-bold text-white">
+            Menu Điều Hành
+        </span>
+
+        <button id="btnCloseSidebar"
+                type="button"
+                class="p-2 text-slate-400
+                       hover:text-white
+                       touch-target">
+
+            <i class="fa-solid fa-xmark text-lg"></i>
+
+        </button>
+
+    </div>
+
+
+    <!-- ==========================================
+         NAVIGATION
+         ========================================== -->
+    <nav class="flex-1 overflow-y-auto py-2 px-2 space-y-1">
+
+        <a href="#dashboard"
+           data-tab="dashboard"
+           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+
+            <i class="fa-solid fa-chart-line w-5 text-center text-emerald-400"></i>
+            Dashboard
+
+        </a>
+
+
+        <a href="#inbound"
+           data-tab="inbound"
+           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+
+            <i class="fa-solid fa-truck-ramp-box w-5 text-center text-blue-400"></i>
+            Inbound
+
+        </a>
+
+
+        <a href="#outbound"
+           data-tab="outbound"
+           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+
+            <i class="fa-solid fa-dolly w-5 text-center text-amber-400"></i>
+            Outbound
+
+        </a>
+
+
+        <a href="#inventory"
+           data-tab="inventory"
+           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+
+            <i class="fa-solid fa-boxes-stacked w-5 text-center text-purple-400"></i>
+            Inventory
+
+        </a>
+
+
+        <a href="#cycle-count"
+           data-tab="cycle-count"
+           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+
+            <i class="fa-solid fa-clipboard-check w-5 text-center text-teal-400"></i>
+            Cycle Count
+
+        </a>
+
+
+        <a href="#timeline"
+           data-tab="timeline"
+           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+
+            <i class="fa-solid fa-timeline w-5 text-center text-indigo-400"></i>
+            Operations Timeline
+
+        </a>
+
+
+        <a href="#alerts"
+           data-tab="alerts"
+           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors justify-between">
+
+            <span class="flex items-center gap-3">
+
+                <i class="fa-solid fa-triangle-exclamation w-5 text-center text-rose-400"></i>
+                System Alerts
+
+            </span>
+
+            <span id="badgeAlertsCount"
+                  class="bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">
+                0
+            </span>
+
+        </a>
+
+
+        <a href="#excel-center"
+           data-tab="excel-center"
+           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+
+            <i class="fa-solid fa-file-excel w-5 text-center text-emerald-500"></i>
+            Template Library
+
+        </a>
+
+
+        <a href="#reports"
+           data-tab="reports"
+           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+
+            <i class="fa-solid fa-print w-5 text-center text-sky-400"></i>
+            Reports & Printing
+
+        </a>
+
+
+        <a href="#audit-log"
+           data-tab="audit-log"
+           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+
+            <i class="fa-solid fa-clock-rotate-left w-5 text-center text-slate-400"></i>
+            Audit Log
+
+        </a>
+
+
+        <a href="#backup"
+           data-tab="backup"
+           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+
+            <i class="fa-solid fa-database w-5 text-center text-amber-500"></i>
+            Backup & Restore
+
+        </a>
+
+
+        <a href="#settings"
+           data-tab="settings"
+           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors">
+
+            <i class="fa-solid fa-gear w-5 text-center text-gray-400"></i>
+            System Settings
+
+        </a>
+
+    </nav>
+
+
+    <!-- ==========================================
+         SIDEBAR FOOTER
+         ========================================== -->
+    <div class="p-3 border-t border-slate-700
+                text-xs text-slate-400
+                flex flex-col gap-2">
+
+        <button id="btnSeedDemo"
+                class="w-full py-2 px-3
+                       bg-slate-700
+                       hover:bg-slate-600
+                       text-slate-200
+                       rounded-lg
+                       text-xs
+                       font-semibold
+                       flex items-center
+                       justify-center
+                       gap-2
+                       transition
+                       touch-target">
+
+            <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
+            Nạp Dữ Liệu Mẫu
+
+        </button>
+
+
+        <button id="btnClearDemo"
+                class="w-full py-1.5 px-3
+                       bg-rose-950/40
+                       hover:bg-rose-900/60
+                       text-rose-300
+                       rounded-lg
+                       text-[11px]
+                       font-medium
+                       flex items-center
+                       justify-center
+                       gap-2
+                       transition
+                       touch-target">
+
+            <i class="fa-solid fa-trash-can"></i>
+            Xóa Toàn Bộ Dữ Liệu
+
+        </button>
+
+    </div>
+
+</aside>
 
         <!-- CONTENT AREA -->
         <main class="flex-1 overflow-y-auto p-3 sm:p-5 pb-20 md:pb-6 relative bg-slate-50 dark:bg-slate-900" id="mainContainer">
@@ -394,23 +726,48 @@
                         <canvas id="chartOperationsOverview"></canvas>
                     </div>
                 </div>
+<!-- SUB CHARTS GRID -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-                <!-- SUB CHARTS GRID -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <h4 class="font-bold text-sm mb-2 text-slate-700 dark:text-slate-200">Inbound vs Outbound CBM Trend</h4>
-                        <div class="h-48 relative"><canvas id="chartInOutTrend"></canvas></div>
-                    </div>
-                    <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <h4 class="font-bold text-sm mb-2 text-slate-700 dark:text-slate-200">Cycle Count Progress</h4>
-                        <div class="h-48 relative flex justify-center"><canvas id="chartCycleProgress"></canvas></div>
-                    </div>
-                    <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <h4 class="font-bold text-sm mb-2 text-slate-700 dark:text-slate-200">Phân Bổ Tồn Kho Theo Kho</h4>
-                        <div class="h-48 relative flex justify-center"><canvas id="chartWhDistribution"></canvas></div>
-                    </div>
-                </div>
-            </section>
+    <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <h4 class="font-bold text-sm mb-2 text-slate-700 dark:text-slate-200">
+            Inbound vs Outbound CBM Trend
+        </h4>
+        <div class="h-48 relative">
+            <canvas id="chartInOutTrend"></canvas>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <h4 class="font-bold text-sm mb-2 text-slate-700 dark:text-slate-200">
+            Cycle Count Progress
+        </h4>
+        <div class="h-48 relative flex justify-center">
+            <canvas id="chartCycleProgress"></canvas>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <h4 class="font-bold text-sm mb-2 text-slate-700 dark:text-slate-200">
+            Phân Bổ Tồn Kho Theo Kho
+        </h4>
+        <div class="h-48 relative flex justify-center">
+            <canvas id="chartWhDistribution"></canvas>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm md:col-span-2 lg:col-span-3">
+        <h4 class="font-bold text-sm mb-2 text-slate-700 dark:text-slate-200 flex items-center gap-2">
+            <i class="fa-solid fa-chart-line text-teal-500"></i>
+            Biểu Đồ Xu Hướng Cycle Count (Độ Lệch & Độ Chính Xác)
+        </h4>
+        <div class="h-64 relative">
+            <canvas id="chartCycleCountTrend"></canvas>
+        </div>
+    </div>
+
+</div>
+</section>
 
             <!-- SECTION INBOUND -->
             <section id="sec-inbound" class="tab-content space-y-4 hidden">
@@ -718,6 +1075,7 @@
                                     <th class="p-3">Ngày Kiểm</th>
                                     <th class="p-3">Kho / Zone</th>
                                     <th class="p-3">Location</th>
+                                    <th class="p-3">SKU</th>
                                     <th class="p-3 text-right">System Qty</th>
                                     <th class="p-3 text-right">Counted Qty</th>
                                     <th class="p-3 text-right">Variance</th>
@@ -732,10 +1090,17 @@
                         </table>
                     </div>
                     <div id="cardCycleView" class="md:hidden p-3 space-y-3"></div>
-                    <div class="p-3 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-xs text-slate-500">
-                        <span id="cycleTotalCount">tổng 0 kết quả</span>
-                        <div class="flex items-center gap-1" id="cyclePagination"></div>
+                   <div class="p-3 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-xs text-slate-500">
+                        <div class="flex items-center gap-2">
+		<span>Hiển thị</span>
+		<select id="cyclePageSize" class="border rounded px-2 py-1 bg-slate-50 dark:bg-slate-700 dark:text-white border-slate-300 dark:border-slate-600">
+			<option value="10">10</option>
+			<option value="25">25</option>
+			<option value="50">50</option>
+		</select>
+                        <span id="cycleTotalCount">Hiển thị 1-10 trong tổng số 36 dòng trong cycle count</span>
                     </div>
+	<div class="flex items-center gap-1" id="cyclePagination"></div>
                 </div>
             </section>
 
@@ -3362,6 +3727,7 @@ if (
 ) {
     Chart.register(percentageLabelPlugin);
 }
+
 function renderSubCharts(inbound = [], outbound = [], cycle = [], inventory = []) {
 
     // =====================================================
@@ -3887,6 +4253,723 @@ function renderSubCharts(inbound = [], outbound = [], cycle = [], inventory = []
                 }
             }
         });
+    }
+
+
+    // =====================================================
+    // 4. CYCLE COUNT TREND
+    // Độ Lệch & Độ Chính Xác - 30 NGÀY
+    //
+    // ACCURACY = Số Location đúng / Tổng Location kiểm kê × 100
+    // VARIANCE = Tổng số lượng Pcs bị lệch thực tế so với hệ thống
+    //
+    // VARIANCE:
+    //   Âm (-) = Thiếu
+    //   Dương (+) = Dư
+    //   0      = Khớp
+    // =====================================================
+
+    const cycleTrendCanvas =
+        document.getElementById('chartCycleCountTrend');
+
+    if (
+        cycleTrendCanvas &&
+        typeof Chart !== 'undefined'
+    ) {
+
+        // -------------------------------------------------
+        // Hủy chart cũ
+        // -------------------------------------------------
+        if (appState.charts.cycleTrend) {
+
+            appState.charts.cycleTrend.destroy();
+
+            appState.charts.cycleTrend = null;
+        }
+
+
+        const ctxCycleTrend =
+            cycleTrendCanvas.getContext('2d');
+
+
+        // -------------------------------------------------
+        // Hàm tạo YYYY-MM-DD theo LOCAL TIME
+        // Không dùng toISOString()
+        // -------------------------------------------------
+        function makeCycleTrendDateKey(date) {
+
+            const year =
+                date.getFullYear();
+
+            const month =
+                String(date.getMonth() + 1)
+                    .padStart(2, '0');
+
+            const day =
+                String(date.getDate())
+                    .padStart(2, '0');
+
+            return `${year}-${month}-${day}`;
+        }
+
+
+        // -------------------------------------------------
+        // Hàm hiển thị ngày DD/MM/YYYY
+        // -------------------------------------------------
+        function formatCycleTrendDate(date) {
+
+            return date.toLocaleDateString(
+                'vi-VN',
+                {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                }
+            );
+        }
+
+
+        // -------------------------------------------------
+        // Tạo 30 ngày gần nhất
+        // Từ 29 ngày trước đến hôm nay
+        // -------------------------------------------------
+        const cycleTrendLabels = [];
+
+        const cycleTrendDates = [];
+
+        const cycleToday = new Date();
+
+
+        for (let i = 29; i >= 0; i--) {
+
+            const d =
+                new Date(cycleToday);
+
+            d.setDate(
+                cycleToday.getDate() - i
+            );
+
+
+            const dateKey =
+                makeCycleTrendDateKey(d);
+
+
+            cycleTrendDates.push(
+                dateKey
+            );
+
+
+            cycleTrendLabels.push(
+                formatCycleTrendDate(d)
+            );
+        }
+
+
+        // -------------------------------------------------
+        // Gom dữ liệu Cycle Count theo ngày
+        // -------------------------------------------------
+        const cycleMap = {};
+
+
+        cycle.forEach(item => {
+
+            let dateKey = '';
+
+
+            // -------------------------------------------------
+            // Ưu tiên ngày Cycle Count
+            // -------------------------------------------------
+            if (item.date) {
+
+                dateKey =
+                    String(item.date)
+                        .substring(0, 10);
+
+            } else if (item.createdAt) {
+
+                dateKey =
+                    String(item.createdAt)
+                        .substring(0, 10);
+            }
+
+
+            // -------------------------------------------------
+            // Không có ngày
+            // -------------------------------------------------
+            if (!dateKey) {
+                return;
+            }
+
+
+            // -------------------------------------------------
+            // Chỉ xử lý dữ liệu nằm trong 30 ngày
+            // -------------------------------------------------
+            if (
+                !cycleTrendDates.includes(
+                    dateKey
+                )
+            ) {
+                return;
+            }
+
+
+            // -------------------------------------------------
+            // Khởi tạo dữ liệu cho ngày
+            // -------------------------------------------------
+            if (!cycleMap[dateKey]) {
+
+                cycleMap[dateKey] = {
+
+                    // Tổng Variance CÓ DẤU
+                    // Âm = Thiếu
+                    // Dương = Dư
+                    totalVariance: 0,
+
+                    // Số Location đúng tuyệt đối
+                    matchedLocations: 0,
+
+                    // Tổng Location đã kiểm kê
+                    totalLocations: 0
+                };
+            }
+
+
+            // =================================================
+            // 1. VARIANCE
+            // =================================================
+            //
+            // GIỮ NGUYÊN DẤU ÂM / DƯƠNG
+            //
+            // Ví dụ:
+            //
+            // Location A = -5  → Thiếu 5
+            // Location B = +3  → Dư 3
+            // Location C =  0  → Khớp
+            //
+            // Tổng Variance = -5 + 3 + 0 = -2 Pcs
+            //
+            // KHÔNG dùng Math.abs()
+            // =================================================
+
+            const varianceQty =
+                Number(item.varianceQty);
+
+
+            const variance =
+                Number.isFinite(
+                    varianceQty
+                )
+                    ? varianceQty
+                    : 0;
+
+
+            cycleMap[dateKey]
+                .totalVariance += variance;
+
+
+            // =================================================
+            // 2. TOTAL LOCATION
+            // =================================================
+            //
+            // Mỗi record Cycle Count = 1 Location
+            //
+            // Không dùng item.accuracy
+            // =================================================
+
+            cycleMap[dateKey]
+                .totalLocations += 1;
+
+
+            // =================================================
+            // 3. MATCHED LOCATION
+            // =================================================
+            //
+            // Location đúng tuyệt đối khi:
+            //
+            // varianceQty === 0
+            // =================================================
+
+            if (
+                Number.isFinite(
+                    varianceQty
+                ) &&
+                varianceQty === 0
+            ) {
+
+                cycleMap[dateKey]
+                    .matchedLocations += 1;
+            }
+
+        });
+
+
+        // =====================================================
+        // 4. DỮ LIỆU VARIANCE
+        // =====================================================
+
+        const varianceData =
+            cycleTrendDates.map(date => {
+
+                // Ngày không có Cycle Count
+                if (
+                    !cycleMap[date]
+                ) {
+
+                    return null;
+                }
+
+
+                return cycleMap[date]
+                    .totalVariance;
+            });
+
+
+        // =====================================================
+        // 5. DỮ LIỆU ACCURACY
+        // =====================================================
+        //
+        // Accuracy =
+        //
+        // Số Location đúng
+        // ------------------------- × 100
+        // Tổng Location kiểm kê
+        // =====================================================
+
+        const accuracyData =
+            cycleTrendDates.map(date => {
+
+                // Ngày không có dữ liệu
+                if (
+                    !cycleMap[date]
+                ) {
+
+                    return null;
+                }
+
+
+                const totalLocations =
+                    cycleMap[date]
+                        .totalLocations;
+
+
+                const matchedLocations =
+                    cycleMap[date]
+                        .matchedLocations;
+
+
+                if (
+                    totalLocations <= 0
+                ) {
+
+                    return null;
+                }
+
+
+                return (
+                    matchedLocations /
+                    totalLocations
+                ) * 100;
+            });
+
+
+        // =====================================================
+        // 6. TẠO CHART CYCLE COUNT TREND
+        // =====================================================
+
+        appState.charts.cycleTrend =
+            new Chart(
+                ctxCycleTrend,
+                {
+
+                    type: 'line',
+
+
+                    data: {
+
+                        labels:
+                            cycleTrendLabels,
+
+
+                        datasets: [
+
+                            // =================================
+                            // ĐỘ LỆCH
+                            // =================================
+                            {
+                                label:
+                                    'Độ Lệch',
+
+                                data:
+                                    varianceData,
+
+                                borderColor:
+                                    '#ef4444',
+
+                                backgroundColor:
+                                    'rgba(239,68,68,0.10)',
+
+                                borderWidth: 2,
+
+                                tension: 0.35,
+
+                                fill: true,
+
+                                pointRadius: 3,
+
+                                pointHoverRadius: 5,
+
+                                yAxisID:
+                                    'yVariance'
+                            },
+
+
+                            // =================================
+                            // ĐỘ CHÍNH XÁC
+                            // =================================
+                            {
+                                label:
+                                    'Độ Chính Xác',
+
+                                data:
+                                    accuracyData,
+
+                                borderColor:
+                                    '#10b981',
+
+                                backgroundColor:
+                                    'rgba(16,185,129,0.10)',
+
+                                borderWidth: 2,
+
+                                tension: 0.35,
+
+                                fill: false,
+
+                                pointRadius: 3,
+
+                                pointHoverRadius: 5,
+
+                                yAxisID:
+                                    'yAccuracy'
+                            }
+                        ]
+                    },
+
+
+                    options: {
+
+                        responsive: true,
+
+                        maintainAspectRatio: false,
+
+
+                        interaction: {
+
+                            mode: 'index',
+
+                            intersect: false
+                        },
+
+
+                        plugins: {
+
+                            legend: {
+
+                                display: true,
+
+                                position: 'top'
+                            },
+
+
+                            tooltip: {
+
+                                callbacks: {
+
+                                    // ---------------------------------
+                                    // Ngày DD/MM/YYYY
+                                    // ---------------------------------
+                                    title:
+                                        function(
+                                            tooltipItems
+                                        ) {
+
+                                            if (
+                                                tooltipItems &&
+                                                tooltipItems.length > 0
+                                            ) {
+
+                                                return tooltipItems[0]
+                                                    .label;
+                                            }
+
+                                            return '';
+                                        },
+
+
+                                    // ---------------------------------
+                                    // Giá trị
+                                    // ---------------------------------
+                                    label:
+                                        function(
+                                            context
+                                        ) {
+
+                                            const value =
+                                                Number(
+                                                    context.parsed.y
+                                                );
+
+
+                                            // Không có dữ liệu
+                                            if (
+                                                !Number.isFinite(
+                                                    value
+                                                )
+                                            ) {
+
+                                                return '';
+                                            }
+
+
+                                            // ---------------------------------
+                                            // Độ chính xác
+                                            // ---------------------------------
+                                            if (
+                                                context.dataset
+                                                    .yAxisID ===
+                                                'yAccuracy'
+                                            ) {
+
+                                                return `${
+                                                    context.dataset.label
+                                                }: ${
+                                                    value.toFixed(1)
+                                                }%`;
+                                            }
+
+
+                                            // ---------------------------------
+                                            // Độ lệch
+                                            // ---------------------------------
+                                            if (
+                                                context.dataset
+                                                    .yAxisID ===
+                                                'yVariance'
+                                            ) {
+
+                                                // Dấu +
+                                                const sign =
+                                                    value > 0
+                                                        ? '+'
+                                                        : '';
+
+
+                                                // Trạng thái
+                                                const status =
+                                                    value > 0
+                                                        ? 'Dư'
+                                                        : value < 0
+                                                            ? 'Thiếu'
+                                                            : 'Khớp';
+
+
+                                                return `${
+                                                    context.dataset.label
+                                                }: ${
+                                                    sign
+                                                }${
+                                                    value.toLocaleString(
+                                                        'vi-VN'
+                                                    )
+                                                } Pcs (${
+                                                    status
+                                                })`;
+                                            }
+
+
+                                            return `${
+                                                context.dataset.label
+                                            }: ${
+                                                value.toLocaleString(
+                                                    'vi-VN'
+                                                )
+                                            } Pcs`;
+                                        }
+                                }
+                            }
+                        },
+
+
+                        scales: {
+
+                            // =================================
+                            // TRỤC X
+                            // =================================
+                            x: {
+
+                                grid: {
+
+                                    display: false
+                                },
+
+
+                                ticks: {
+
+                                    // Hiển thị đầy đủ 30 ngày
+                                    autoSkip: false,
+
+                                    callback:
+                                        function(
+                                            value,
+                                            index
+                                        ) {
+
+                                            return (
+                                                cycleTrendLabels[index] ||
+                                                ''
+                                            );
+                                        },
+
+
+                                    maxRotation: 45,
+
+                                    minRotation: 45,
+
+                                    includeBounds: true
+                                }
+                            },
+
+
+                            // =================================
+                            // TRỤC Y - ĐỘ LỆCH
+                            // =================================
+                            yVariance: {
+
+                                type: 'linear',
+
+                                position: 'left',
+
+                                // Cho phép hiển thị cả âm và dương
+                                beginAtZero: true,
+
+
+                                grid: {
+
+                                    display: false
+                                },
+
+
+                                ticks: {
+
+                                    callback:
+                                        function(value) {
+
+                                            const numericValue =
+                                                Number(value);
+
+
+                                            if (
+                                                numericValue > 0
+                                            ) {
+
+                                                return `+${numericValue.toLocaleString('vi-VN')}`;
+                                            }
+
+
+                                            return numericValue
+                                                .toLocaleString(
+                                                    'vi-VN'
+                                                );
+                                        }
+                                },
+
+
+                                title: {
+
+                                    display: true,
+
+                                    text:
+                                        'Độ Lệch (Pcs)'
+                                }
+                            },
+
+
+                            // =================================
+                            // TRỤC Y - ĐỘ CHÍNH XÁC
+                            // =================================
+                            yAccuracy: {
+
+                                type: 'linear',
+
+                                position: 'right',
+
+                                min: 0,
+
+                                max: 100,
+
+
+                                grid: {
+
+                                    drawOnChartArea: false
+                                },
+
+
+                                ticks: {
+
+                                    callback:
+                                        function(value) {
+
+                                            return `${value}%`;
+                                        }
+                                },
+
+
+                                title: {
+
+                                    display: true,
+
+                                    text:
+                                        'Độ Chính Xác (%)'
+                                }
+                            }
+                        }
+                    }
+                }
+            );
+
+
+        // =====================================================
+        // DEBUG
+        // =====================================================
+
+        console.log(
+            'Cycle Count Trend - Dates:',
+            cycleTrendDates
+        );
+
+
+        console.log(
+            'Cycle Count Trend - Labels:',
+            cycleTrendLabels
+        );
+
+
+        console.log(
+            'Cycle Count Trend - Variance:',
+            varianceData
+        );
+
+
+        console.log(
+            'Cycle Count Trend - Accuracy:',
+            accuracyData
+        );
+
+
+        console.log(
+            'Cycle Count Trend - Map:',
+            cycleMap
+        );
     }
 }
 
@@ -5587,8 +6670,21 @@ function changeInventoryPage(page) {
 
 
 
+// =====================================================
+// CYCLE COUNT TABLE
+// =====================================================
+
 async function renderCycleCountTable() {
-    let data = await WMSDataService.getAll('cycleCount');
+
+    let data =
+        await WMSDataService.getAll('cycleCount');
+
+    // SẮP XẾP THEO NGÀY KIỂM TĂNG DẦN
+   data.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+    // ==========================================
+    // SEARCH / FILTER
+    // ==========================================
 
     const searchVal =
         (document.getElementById('cycleSearch')?.value || '')
@@ -5601,95 +6697,206 @@ async function renderCycleCountTable() {
     const dateVal =
         document.getElementById('cycleFilterDate')?.value || '';
 
-    // =====================================================
+    // ==========================================
     // SEARCH
-    // =====================================================
+    // ==========================================
 
     if (searchVal) {
+
         data = data.filter(c =>
-            (c.location || '').toLowerCase().includes(searchVal) ||
-            (c.checker || '').toLowerCase().includes(searchVal) ||
-            (c.warehouse || '').toLowerCase().includes(searchVal) ||
-            (c.zone || '').toLowerCase().includes(searchVal)
+            (c.location || '')
+                .toLowerCase()
+                .includes(searchVal) ||
+
+            (c.checker || '')
+                .toLowerCase()
+                .includes(searchVal) ||
+
+            (c.warehouse || '')
+                .toLowerCase()
+                .includes(searchVal) ||
+
+            (c.zone || '')
+                .toLowerCase()
+                .includes(searchVal)
         );
     }
 
-    // =====================================================
+    // ==========================================
     // FILTER WAREHOUSE
-    // =====================================================
+    // ==========================================
 
     if (whVal) {
-        data = data.filter(c => c.warehouse === whVal);
+
+        data = data.filter(
+            c => c.warehouse === whVal
+        );
     }
 
-    // =====================================================
+    // ==========================================
     // FILTER DATE
-    // =====================================================
+    // ==========================================
 
     if (dateVal) {
-        data = data.filter(c => c.date === dateVal);
+
+        data = data.filter(
+            c =>
+                String(c.date || '')
+                    .substring(0, 10) === dateVal
+        );
     }
 
-    const tbody = document.getElementById('tbCycleBody');
+    // ==========================================
+    // PAGINATION
+    // ==========================================
+
+    const pageSize =
+        Number(
+            document.getElementById('cyclePageSize')?.value ||
+            appState.pageSize?.cycleCount ||
+            10
+        );
+
+    appState.pageSize.cycleCount =
+        pageSize;
+
+    const totalRows =
+        data.length;
+
+    const totalPages =
+        Math.ceil(
+            totalRows / pageSize
+        ) || 1;
+
+    // ==========================================
+    // KIỂM TRA CURRENT PAGE
+    // ==========================================
+
+    if (!appState.currentPage) {
+        appState.currentPage = {};
+    }
+
+    if (
+        typeof appState.currentPage.cycleCount !== 'number' ||
+        isNaN(appState.currentPage.cycleCount)
+    ) {
+        appState.currentPage.cycleCount = 1;
+    }
+
+    if (
+        appState.currentPage.cycleCount > totalPages
+    ) {
+        appState.currentPage.cycleCount =
+            totalPages;
+    }
+
+    if (
+        appState.currentPage.cycleCount < 1
+    ) {
+        appState.currentPage.cycleCount = 1;
+    }
+
+    const currentPage =
+        appState.currentPage.cycleCount;
+
+    // ==========================================
+    // SLICE DATA
+    // ==========================================
+
+    const startIndex =
+        (currentPage - 1) * pageSize;
+
+    const paginatedData =
+        data.slice(
+            startIndex,
+            startIndex + pageSize
+        );
+
+    // ==========================================
+    // DOM
+    // ==========================================
+
+    const tbody =
+        document.getElementById('tbCycleBody');
+
+    const totalCount =
+        document.getElementById('cycleTotalCount');
+
+    const paginationContainer =
+        document.getElementById('cyclePagination');
 
     if (!tbody) return;
 
     tbody.innerHTML = '';
 
-    // =====================================================
+    // ==========================================
     // EMPTY
-    // =====================================================
+    // ==========================================
 
-    if (data.length === 0) {
+    if (totalRows === 0) {
+
         tbody.innerHTML = `
             <tr>
-                <td colspan="10" class="p-8 text-center text-slate-400">
+                <td
+                    colspan="12"
+                    class="p-8 text-center text-slate-400"
+                >
                     📋 Không tìm thấy kết quả kiểm kê.
                 </td>
             </tr>
         `;
 
-        const totalEl = document.getElementById('cycleTotalCount');
+        if (totalCount) {
+            totalCount.innerText =
+                'tổng 0 dòng';
+        }
 
-        if (totalEl) {
-            totalEl.innerText = 'tổng 0 kết quả';
+        if (paginationContainer) {
+            paginationContainer.innerHTML = '';
         }
 
         return;
     }
 
-    // =====================================================
+    // ==========================================
     // RENDER
-    // =====================================================
+    // ==========================================
 
-    data.forEach(item => {
+    paginatedData.forEach(item => {
 
-        // -------------------------------------------------
-        // Đảm bảo số liệu luôn hợp lệ
-        // -------------------------------------------------
+        const systemQty =
+            Number(item.systemQty) || 0;
 
-        const systemQty = Number(item.systemQty) || 0;
-        const countedQty = Number(item.countedQty) || 0;
+        const countedQty =
+            Number(item.countedQty) || 0;
 
         const varianceQty =
-            Number.isFinite(Number(item.varianceQty))
+            Number.isFinite(
+                Number(item.varianceQty)
+            )
                 ? Number(item.varianceQty)
                 : countedQty - systemQty;
 
         const accuracy =
-            Number.isFinite(Number(item.accuracy))
+            Number.isFinite(
+                Number(item.accuracy)
+            )
                 ? Number(item.accuracy)
                 : systemQty > 0
                     ? Number(
                         (
-                            (1 - Math.abs(varianceQty) / systemQty) * 100
+                            (
+                                1 -
+                                Math.abs(varianceQty) /
+                                systemQty
+                            ) * 100
                         ).toFixed(1)
                     )
                     : 100;
 
-        // -------------------------------------------------
-        // Màu Variance
-        // -------------------------------------------------
+        // ==========================================
+        // VARIANCE COLOR
+        // ==========================================
 
         const varColor =
             varianceQty === 0
@@ -5698,9 +6905,9 @@ async function renderCycleCountTable() {
                     ? 'text-rose-600 font-bold'
                     : 'text-emerald-600 font-bold';
 
-        // -------------------------------------------------
-        // Màu Accuracy
-        // -------------------------------------------------
+        // ==========================================
+        // ACCURACY COLOR
+        // ==========================================
 
         const accuracyColor =
             accuracy >= 99.5
@@ -5709,9 +6916,9 @@ async function renderCycleCountTable() {
                     ? 'text-amber-600'
                     : 'text-rose-600';
 
-        // -------------------------------------------------
-        // Trạng thái
-        // -------------------------------------------------
+        // ==========================================
+        // STATUS
+        // ==========================================
 
         let statusClass =
             'bg-slate-100 text-slate-700';
@@ -5731,16 +6938,18 @@ async function renderCycleCountTable() {
                 'bg-amber-100 text-amber-700';
         }
 
-        // -------------------------------------------------
+        // ==========================================
         // ROW
-        // -------------------------------------------------
+        // ==========================================
 
-        const tr = document.createElement('tr');
+        const tr =
+            document.createElement('tr');
 
         tr.className =
             'hover:bg-slate-50 dark:hover:bg-slate-700/50 transition';
 
         tr.innerHTML = `
+
             <td class="p-3">
                 ${formatDisplayDate(item.date)}
             </td>
@@ -5753,6 +6962,10 @@ async function renderCycleCountTable() {
 
             <td class="p-3 font-mono font-bold text-teal-600">
                 ${escapeHTML(item.location || '')}
+            </td>
+
+            <td class="p-3 font-semibold">
+                ${escapeHTML(item.itemCode || '')}
             </td>
 
             <td class="p-3 text-right font-mono">
@@ -5776,51 +6989,274 @@ async function renderCycleCountTable() {
             </td>
 
             <td class="p-3">
-                <span class="px-2 py-0.5 rounded-full text-[10px] ${statusClass} font-bold">
+
+                <span
+                    class="px-2 py-0.5 rounded-full text-[10px] ${statusClass} font-bold"
+                >
                     ${escapeHTML(item.status || '')}
                 </span>
+
             </td>
- 
-            <td class="p-3 text-slate-500 italic max-w-xs truncate" title="${escapeHTML(item.remark || '')}">
+
+            <td
+                class="p-3 text-slate-500 italic max-w-xs truncate"
+                title="${escapeHTML(item.remark || '')}"
+            >
                 ${escapeHTML(item.remark || '-')}
-             </td>
+            </td>
 
             <td class="p-3 text-center">
+
                 <div class="flex items-center justify-center gap-2">
 
                     <button
                         onclick="openCrudModal('cycleCount', '${item.id}')"
                         class="px-3 py-1.5 text-sm rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100"
-                        title="Chỉnh sửa">
+                        title="Chỉnh sửa"
+                    >
                         <i class="fas fa-edit"></i>
                     </button>
 
                     <button
                         onclick="deleteItem('cycleCount', '${item.id}')"
                         class="text-rose-500 p-1 touch-target"
-                        title="Xóa">
+                        title="Xóa"
+                    >
                         <i class="fa-solid fa-trash"></i>
                     </button>
 
                 </div>
+
             </td>
         `;
 
         tbody.appendChild(tr);
     });
 
-    // =====================================================
-    // TOTAL
-    // =====================================================
+    // ==========================================
+    // COUNT
+    // ==========================================
 
-    const totalEl =
-        document.getElementById('cycleTotalCount');
+    const displayFrom =
+        startIndex + 1;
 
-    if (totalEl) {
-        totalEl.innerText =
-            `tổng ${data.length} kết quả`;
+    const displayTo =
+        Math.min(
+            startIndex + pageSize,
+            totalRows
+        );
+
+    if (totalCount) {
+
+        totalCount.innerText =
+            `Hiển thị ${displayFrom}-${displayTo} trong tổng số ${totalRows} dòng`;
     }
+
+    // ==========================================
+    // PAGINATION CONTROLS
+    // ==========================================
+
+    renderCyclePaginationControls(
+        totalPages,
+        currentPage
+    );
 }
+
+
+// =====================================================
+// CYCLE COUNT PAGINATION CONTROLS
+// =====================================================
+
+function renderCyclePaginationControls(
+    totalPages,
+    currentPage
+) {
+
+    const container =
+        document.getElementById(
+            'cyclePagination'
+        );
+
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    if (totalPages <= 1) {
+        return;
+    }
+
+    let html = '';
+
+    // ==========================================
+    // PREVIOUS
+    // ==========================================
+
+    html += `
+        <button
+            onclick="changeCycleCountPage(${currentPage - 1})"
+            class="
+                px-3 py-1.5
+                bg-slate-200 dark:bg-slate-700
+                rounded-lg
+                text-xs
+                font-medium
+                ${currentPage === 1
+                    ? 'opacity-50 cursor-not-allowed'
+                    : 'hover:bg-slate-300 dark:hover:bg-slate-600'}
+            "
+            ${currentPage === 1 ? 'disabled' : ''}
+        >
+            ‹ Trước
+        </button>
+    `;
+
+    // ==========================================
+    // PAGE LIST
+    // ==========================================
+
+    const pages = [];
+
+    if (totalPages <= 7) {
+
+        for (
+            let i = 1;
+            i <= totalPages;
+            i++
+        ) {
+            pages.push(i);
+        }
+
+    } else {
+
+        pages.push(1);
+
+        if (currentPage > 4) {
+            pages.push('...');
+        }
+
+        const start =
+            Math.max(
+                2,
+                currentPage - 1
+            );
+
+        const end =
+            Math.min(
+                totalPages - 1,
+                currentPage + 1
+            );
+
+        for (
+            let i = start;
+            i <= end;
+            i++
+        ) {
+            pages.push(i);
+        }
+
+        if (
+            currentPage <
+            totalPages - 3
+        ) {
+            pages.push('...');
+        }
+
+        pages.push(totalPages);
+    }
+
+    // ==========================================
+    // RENDER PAGE BUTTON
+    // ==========================================
+
+    pages.forEach(page => {
+
+        if (page === '...') {
+
+            html += `
+                <span
+                    class="
+                        px-2 py-1.5
+                        text-xs
+                        text-slate-400
+                    "
+                >
+                    …
+                </span>
+            `;
+
+            return;
+        }
+
+        const isActive =
+            page === currentPage;
+
+        html += `
+            <button
+                onclick="changeCycleCountPage(${page})"
+                class="
+                    min-w-[32px]
+                    px-2.5 py-1.5
+                    rounded-lg
+                    text-xs
+                    font-medium
+                    transition
+                    ${isActive
+                        ? 'bg-teal-600 text-white shadow-sm'
+                        : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600'}
+                "
+            >
+                ${page}
+            </button>
+        `;
+    });
+
+    // ==========================================
+    // NEXT
+    // ==========================================
+
+    html += `
+        <button
+            onclick="changeCycleCountPage(${currentPage + 1})"
+            class="
+                px-3 py-1.5
+                bg-slate-200 dark:bg-slate-700
+                rounded-lg
+                text-xs
+                font-medium
+                ${currentPage === totalPages
+                    ? 'opacity-50 cursor-not-allowed'
+                    : 'hover:bg-slate-300 dark:hover:bg-slate-600'}
+            "
+            ${currentPage === totalPages ? 'disabled' : ''}
+        >
+            Sau ›
+        </button>
+    `;
+
+    container.innerHTML =
+        html;
+}
+
+
+// =====================================================
+// CHANGE CYCLE COUNT PAGE
+// =====================================================
+
+function changeCycleCountPage(page) {
+
+    if (!Number.isFinite(page)) {
+        return;
+    }
+
+    appState.currentPage.cycleCount =
+        Math.max(
+            1,
+            Math.floor(page)
+        );
+
+    renderCycleCountTable();
+}
+
 
         function getStatusBadge(status) {
             switch(status) {
@@ -6189,6 +7625,7 @@ function downloadExcelTemplate(module) {
             'Warehouse',
             'Zone',
             'Location',
+            'Item Code',
             'System Qty',
             'Counted Qty',
             'Status',
@@ -6203,6 +7640,7 @@ function downloadExcelTemplate(module) {
             'WH01',
             'Zone A',
             'WH01-ZA-A01-R01-L01',
+             'SKU-APP-15',
             100,
             97,
             'Completed',
@@ -6468,6 +7906,7 @@ function downloadExcelTemplate(module) {
             const wh = String(row['Warehouse'] || '');
             const zone = String(row['Zone'] || '');
             const loc = String(row['Location'] || '');
+            const itemCodeVal = String(row['Item Code'] || row['SKU'] || '').trim(); 
             keyVal = `${date}|${wh}|${zone}|${loc}`;
 
             if (!loc) { isValid = false; errorMsg.push('Thiếu Location'); }
@@ -6482,6 +7921,7 @@ function downloadExcelTemplate(module) {
             parsedObj = {
                 id: isDup ? existingData.find(e => e.date === date && e.warehouse === wh && e.zone === zone && e.location === loc).id : 'CC-' + crypto.randomUUID().slice(0, 8),
                 date, warehouse: wh, zone, location: loc,
+                itemCode: itemCodeVal,
                 plannedQty: sysQty, systemQty: sysQty, countedQty: countQty,
                 varianceQty: varQty, accuracy: acc,
                 status: String(row['Status'] || 'Completed'),
@@ -6983,6 +8423,9 @@ async function exportModuleToExcel(module) {
 
                 'Location':
                     item.location || '',
+	
+               'Item Code':
+	item.itemCode || '',
 
                 'System Qty':
                     item.systemQty ||
@@ -7990,6 +9433,7 @@ function getModuleFields(module, item = {}) {
            { name: 'warehouse', label: 'Kho', value: item.warehouse || 'WH01', required: true },
            { name: 'zone', label: 'Zone ', value: item.zone || 'Zone A' },
            { name: 'location', label: 'Location', value: item.location || 'A-01-01', required: true },
+           { name: 'itemCode', label: 'Mã SKU', value: item.itemCode || '' },
             { name: 'systemQty', label: 'System Qty (Số hệ thống)', type: 'number', value: item.systemQty || 0 },
             { name: 'countedQty', label: 'Counted Qty (Thực tế đếm)', type: 'number', value: item.countedQty || 0 },
             { name: 'varianceQty', label: 'Variance', type: 'number', value: item.varianceQty || 0 },
@@ -9088,52 +10532,51 @@ function initAppEvents() {
     }
 
 
-    // ==========================================
-    // SIDEBAR MOBILE
-    // ==========================================
-    const btnToggleSidebar =
-        document.getElementById('btnToggleSidebar');
+// ==========================================
+// HEADER MENU TOGGLE (ĐÃ DI CHUYỂN LÊN GÓC PHẢI)
+// ==========================================
+const sidebar = document.getElementById('appSidebar');
+const btnHeaderMenuToggle = document.getElementById('btnHeaderMenuToggle');
+const iconHeaderMenu = document.getElementById('iconHeaderMenu');
 
-    if (btnToggleSidebar) {
+function updateHeaderMenuToggle() {
+    if (!sidebar || !btnHeaderMenuToggle || !iconHeaderMenu) return;
 
-        btnToggleSidebar.onclick = () => {
+    const isOpen = sidebar.classList.contains('sidebar-expanded');
 
-            const sidebar =
-                document.getElementById('appSidebar');
-
-            const backdrop =
-                document.getElementById('sidebarBackdrop');
-
-            if (sidebar) {
-                sidebar.classList.remove(
-                    '-translate-x-full'
-                );
-            }
-
-            if (backdrop) {
-                backdrop.classList.remove('hidden');
-            }
-        };
+    if (isOpen) {
+        iconHeaderMenu.className = 'fa-solid fa-xmark text-lg';
+        btnHeaderMenuToggle.classList.add('bg-slate-700', 'text-white');
+    } else {
+        iconHeaderMenu.className = 'fa-solid fa-bars text-lg';
+        btnHeaderMenuToggle.classList.remove('bg-slate-700', 'text-white');
     }
+}
 
+if (btnHeaderMenuToggle && sidebar) {
+    btnHeaderMenuToggle.onclick = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-    const btnCloseSidebar =
-        document.getElementById('btnCloseSidebar');
+        // Toggle trạng thái mở/đóng sidebar trên desktop
+        sidebar.classList.toggle('sidebar-expanded');
+        
+        if (sidebar.classList.contains('sidebar-expanded')) {
+            sidebar.style.transform = 'translateX(0)';
+        } else {
+            sidebar.style.transform = 'translateX(-100%)';
+        }
 
-    if (btnCloseSidebar) {
-        btnCloseSidebar.onclick =
-            closeSidebarMobile;
-    }
+        updateHeaderMenuToggle();
+    };
+}
 
-
-    const sidebarBackdrop =
-        document.getElementById('sidebarBackdrop');
-
-    if (sidebarBackdrop) {
-        sidebarBackdrop.onclick =
-            closeSidebarMobile;
-    }
-
+// Trạng thái khởi tạo ban đầu
+if (sidebar) {
+    sidebar.classList.remove('sidebar-expanded');
+    sidebar.style.transform = 'translateX(-100%)';
+}
+updateHeaderMenuToggle();
 
     // ==========================================
     // EXCEL TRIGGER BUTTONS
@@ -9771,8 +11214,33 @@ if (btnConfirmImportAllWithUpdate) {
             renderCycleCountTable
         );
     });
-
 }
+    // =====================================================
+    // CYCLE COUNT PAGE SIZE
+    // =====================================================
+
+const cyclePageSizeSelect =
+    document.getElementById(
+        'cyclePageSize'
+    );
+
+if (cyclePageSizeSelect) {
+
+    cyclePageSizeSelect.addEventListener(
+        'change',
+        (e) => {
+
+            appState.pageSize.cycleCount =
+                Number(e.target.value);
+
+            // Reset về trang 1
+            appState.currentPage.cycleCount = 1;
+
+            renderCycleCountTable();
+        }
+    );
+}
+
         function switchTab(tabId) {
             appState.currentTab = tabId;
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
